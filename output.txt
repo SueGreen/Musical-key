@@ -1,0 +1,40 @@
+If all outputs agree, then they are right in 92.31% of cases
+If all outputs agree, then none is right in 7.69% of cases
+	They determined a relative key in 0.00% of cases
+	Closely related key in 0.00% of cases
+	Something different in 7.69% of cases
+If two outputs agree, these two outputs are right in 60.47% of cases. The third one is mistaken. 
+	Overall, if two outputs agree and these two outputs are right, then music21 is right in 80.77% of cases
+	Music21 determined a relative key in 2% of cases
+	Music21 determined a closely related key in 3.85% of cases
+	Music21 something different in 7.69% of cases
+		Overall, if two outputs agree and these two outputs are right, then Krumhansl algorithm is right in 73.08% of cases
+		Krumhansl algorithm determined a relative key in 0% of cases
+		Krumhansl algorithm determined a closely related key in 26.92% of cases
+		Krumhansl algorithm determined something different in 0.00% of cases
+			Overall, if two outputs agree and these two outputs are right, then algorithm SA  is right in 46.15% of cases
+			algorithm SA  determined a relative key in 11% of cases
+			algorithm SA  determined a closely related key in 3.85% of cases
+			algorithm SA  determined something different in 7.69% of cases
+If two outputs agree, the third one is right in 13.95% of cases
+If two outputs agree, none is right in 27.91% of cases
+If all outputs are different,they are all wrong in 33.33% of cases
+If no output is the same, then there is one right output in 66.67% of cases: 
+If no output is the same, then Music21 gives the right answer in 75.00% of cases, if it is mistaken, then it determines a relative key in 0.00% of cases, closely related in 16.67 something different in 8.33% of cases
+If no output is the same, then Krumhansl gives the right answer in 25.00% of cases, if it is mistaken, then it determines a relative key in 8.33% of cases, closely related in 16.67 something different in 50.00% of cases
+If no output is the same, then Algorithm SA gives the right answer in 0.00% of cases, if it is mistaken, then it determines a relative key in 41.67% of cases, closely related in 16.67 something different in 41.67% of cases
+
+
+ Number of outputs      Number of correct 
+that agree on the         outputs given
+     answer            the number of coincidences
+    3 - 29.89%               3 - 92.31%
+                             0 - 7.69%
+    2 - 49.43%               2 - 60.47%
+                             1 - 13.95%
+                             0 - 27.91%
+    0 - 20.69%            1 right - 66.67%
+                        1 (music21) - 75.00%   relative key - 0.00%, closely related key - 16.67 something different in 8.33% of cases
+                       1 (Krumhansl) - 25.00%   relative key - 8.33% of cases, closely related in 16.67%, something different in 50.00% of cases
+                       1 (Algorithm SA) - 0.00%   relative key - 41.67% of cases, closely related in 16.67 something different in 41.67% of cases
+
