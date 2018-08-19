@@ -96,6 +96,7 @@ relative_key = {"C major": "A minor", "D- major": "B- minor", "D major": "B mino
                 "G major": "E minor", "A- major": "F minor", "A major": "F+ minor", "B- major": "G minor",
                 "B major": "G+ minor",
                 }
+minimal_frequency = 1
 
 
 def get_closely_related_keys(key1):
@@ -184,6 +185,7 @@ def algo(file):
     frequency = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0}
     note_count = 0
     last_note = 0
+    # count the frequencies of the notes
     for i in file.tracks:
         for j in i[2:len(i)]:
             if not j.is_meta and not ignored_messages.__contains__(j.type) and j.velocity != 0:
@@ -203,7 +205,7 @@ def algo(file):
     sorted_frequency = sorted_frequency[:8]
 
     for i in range(12):
-        if frequency[i] > 1:
+        if frequency[i] > minimal_frequency:
             if is_a_sign(i):
                 the_signs.append(i)
                 sign_count += 1
@@ -284,97 +286,80 @@ def are_closely_related(key1, key2):
 def is_true(key):
     return input_files[x] == key
 
-
 num_of_files = len(input_files)
 # number of right outputs of a single algorithm not considering the others
-mus_num = 0
-krumhansl_num = 0
-algo_num = 0
+mus_right = 0
+krum_right = 0
+algo_right = 0
 
-two_agree_two_right_num = 0
-all_agree_all_right_num = 0
-two_agree_one_right_num = 0
-
-all_agree_num = 0
-strictly_two_agree_num = 0
-none_agree_num = 0
-none_agree_none_right_num = 0
-all_agree_none_right_num = 0
-two_agree_none_right_num = 0
-
-all_agree_none_right_relative_num = 0
 mus_relative = 0
 krum_relative = 0
 algo_relative = 0
 
-mus_relative_when_none_right = 0
-krum_relative_when_none_right = 0
-algo_relative_when_none_right = 0
-
-mus_relative_when_none_agree_one_right = 0
-krum_relative_when_none_agree_one_right = 0
-algo_relative_when_none_agree_one_right = 0
-
-none_agree_mus_right = 0
-none_agree_krum_right = 0
-none_agree_algo_right = 0
-
-none_agree_one_right = 0
 mus_closely_related = 0
 krum_closely_related = 0
 algo_closely_related = 0
 
-all_agree_none_right_closely_related_num = 0
+all_agree_num = 0
+all_agree_all_right = 0
+all_agree_all_rel = 0
+all_agree_all_closely_rel = 0
+all_agree_smth_else=0
 
-mus_closely_related_when_none_agree_one_right = 0
-krum_closely_related_when_none_agree_one_right = 0
-algo_closely_related_when_none_agree_one_right = 0
 
-mus_key_wrong_when_none_agree_one_right = 0
-all_agree_none_right_something_diff = 0
+two_agree_mus_krum = 0
+two_agree_mus_algo = 0
+two_agree_krum_algo = 0
 
-krum_key_wrong_when_none_agree_one_right = 0
-algo_key_wrong_when_none_agree_one_right = 0
+two_agree_two_right_mus_krum =0
+two_agree_two_right_mus_algo=0
+two_agree_two_right_krum_algo=0
 
-krum_relative_when_two_agree_two_right = 0
-krum_closely_related_when_two_agree_two_right = 0
-algo_relative_when_two_agree_two_right = 0
-algo_closely_related_when_two_agree_two_right = 0
-mus_relative_when_two_agree_two_right = 0
-mus_closely_related_when_two_agree_two_right = 0
+two_agree_two_rel_mus_krum = 0
+two_agree_two_cl_rel_mus_krum = 0
+two_agree_two_smth_mus_krum = 0
+two_agree_two_rel_mus_algo = 0
+two_agree_two_cl_rel_mus_algo = 0
+two_agree_two_smth_mus_algo = 0
+two_agree_two_rel_krum_algo = 0
+two_agree_two_cl_rel_krum_algo = 0
+two_agree_two_smth_krum_algo = 0
 
-two_agree_two_right_mus_right = 0
+mus_krum_agree_algo_right = 0
+mus_krum_agree_algo_rel = 0
+mus_krum_agree_algo_cl_rel = 0
+mus_krum_agree_algo_smth_else = 0
 
-two_agree_none_right_num += 1
-krum_relative_when_two_agree_none_right = 0
-krum_closely_related_when_two_agree_none_right = 0
-algo_relative_when_two_agree_none_right = 0
-algo_closely_related_when_two_agree_none_right = 0
-mus_relative_when_two_agree_none_right = 0
-mus_closely_related_when_two_agree_none_right = 0
+mus_algo_agree_krum_right = 0
+mus_algo_agree_krum_rel = 0
+mus_algo_agree_krum_cl_rel = 0
+mus_algo_agree_krum_smth_else = 0
 
-two_agree_one_right_num = 0
-krum_relative_when_two_agree_one_right = 0
-krum_closely_related_when_two_agree_one_right = 0
-algo_relative_when_two_agree_one_right = 0
-algo_closely_related_when_two_agree_one_right = 0
-algo_closely_related_when_two_agree_one_right = 0
-mus_relative_when_two_agree_one_right = 0
-mus_closely_related_when_two_agree_one_right = 0
+krum_algo_agree_mus_right = 0
+krum_algo_agree_mus_rel = 0
+krum_algo_agree_mus_cl_rel = 0
+krum_algo_agree_mus_smth_else = 0
 
-two_agree_two_right_krum_right = 0
-two_agree_two_right_algo_right = 0
-two_agree_one_right_mus_right = 0
-two_agree_one_right_krum_right = 0
-two_agree_one_right_algo_right = 0
 
-krum_something_diff_when_two_agree_two_right = 0
-algo_something_diff_when_two_agree_two_right = 0
-mus_something_diff_when_two_agree_two_right = 0
+none_agree_num = 0
+none_agree_none_right_num = 0
 
-mus_something_diff_when_none_agree_one_right = 0
-krum_something_diff_when_none_agree_one_right = 0
-algo_something_diff_when_none_agree_one_right = 0
+none_agree_one_right_mus=0
+none_agree_one_right_krum=0
+none_agree_one_right_algo=0
+
+none_agree_mus_rel = 0
+none_agree_mus_closely_rel = 0
+none_agree_mus_smth_else = 0
+
+none_agree_krum_rel = 0
+none_agree_krum_closely_rel = 0
+none_agree_krum_smth_else = 0
+
+none_agree_algo_rel = 0
+none_agree_algo_closely_rel = 0
+none_agree_algo_smth_else = 0
+
 
 for x in input_files:
     mid = MidiFile(x)
@@ -383,391 +368,232 @@ for x in input_files:
     krum_key = get_key(mid)
     algo_key = algo(mid)
     mus_key = mus_key.tonic.name + " " + mus_key.mode
-
     # find out if each single algorithm determined a right key or a relative key or something else
     #     for Music21
     if is_true(mus_key):
-        mus_num += 1
+        mus_right += 1
     elif are_relative(mus_key, true_key):
         mus_relative += 1
     elif are_closely_related(true_key, mus_key):
         mus_closely_related += 1
     #     for Krumhansl
     if is_true(krum_key):
-        krumhansl_num += 1
+        krum_right += 1
     elif are_relative(krum_key, true_key):
         krum_relative += 1
     elif are_closely_related(true_key, krum_key):
         krum_closely_related += 1
     #     for algorithm SA
     if is_true((algo_key)):
-        algo_num += 1
+        algo_right += 1
     elif are_relative(algo_key, true_key):
         algo_relative += 1
     elif are_closely_related(true_key, algo_key):
         algo_closely_related += 1
 
-    #  number of coincidences
+    at_least_one_right = is_true(mus_key) or is_true(krum_key) or is_true(algo_key)
+
+
+
+
     #  all 3 give the same output
     all_agree = mus_key == krum_key and mus_key == algo_key
     if all_agree:
         all_agree_num += 1
-    #  strictly 2 give the same output
-    strictly_two_agree = (mus_key == krum_key and mus_key != algo_key) or (
-            mus_key == algo_key and mus_key != krum_key) or (krum_key == algo_key and krum_key != mus_key)
-    if strictly_two_agree:
-        strictly_two_agree_num += 1
+        # and the output is correct
+        if is_true(mus_key):
+            all_agree_all_right +=1
+        elif are_relative(mus_key, true_key):
+            all_agree_all_rel+=1
+        elif are_closely_related(mus_key, true_key):
+            all_agree_all_closely_rel+=1
+        else:
+            all_agree_smth_else+=1
+
+
     #  no algoritm gives the same output
     none_agree = mus_key != krum_key and mus_key != algo_key and krum_key != algo_key
     if none_agree:
         none_agree_num += 1
-
-    #  number of right answers taking into account the number of coincidences
-    one_or_three_right = is_true(mus_key) ^ is_true(krum_key) ^ is_true(algo_key)
-    at_least_one_right = is_true(mus_key) or is_true(krum_key) or is_true(algo_key)
-
-    #  3 right answers when 3 coincide
-    all_right = (is_true(mus_key) and is_true(krum_key) and is_true(algo_key))
-    if all_right and all_agree:
-        all_agree_all_right_num += 1
-    #  0 right answers when 3 coincide
-    if not at_least_one_right and all_agree:
-        all_agree_none_right_num += 1
-        if are_relative(mus_key, true_key):
-            all_agree_none_right_relative_num += 1
-        elif are_closely_related(true_key, mus_key):
-            all_agree_none_right_closely_related_num += 1
+        # but one algorithm gives the right output
+        if at_least_one_right:
+            # which means only one right
+            # mus
+            if is_true(mus_key):
+                none_agree_one_right_mus +=1
+            # krum
+            elif is_true(krum_key):
+                none_agree_one_right_krum+=1
+            # algo
+            elif is_true(algo_key):
+                none_agree_one_right_algo+=1
         else:
-            all_agree_none_right_something_diff += 1
+            none_agree_none_right_num+=1
 
-    #  2 right answers when 2 coincide
-    strictly_two_right = (not one_or_three_right and at_least_one_right)
-    if strictly_two_right and strictly_two_agree:
-        two_agree_two_right_num += 1
+        if are_relative(mus_key, true_key):
+            none_agree_mus_rel += 1
+        elif are_closely_related(mus_key, true_key):
+            none_agree_mus_closely_rel+=1
+        elif not is_true(mus_key):
+            none_agree_mus_smth_else+=1
 
+        if are_relative(krum_key, true_key):
+            none_agree_krum_rel += 1
+        elif are_closely_related(krum_key, true_key):
+            none_agree_krum_closely_rel += 1
+        elif not is_true(krum_key):
+            none_agree_krum_smth_else+=1
+
+        if are_relative(algo_key, true_key):
+            none_agree_algo_rel += 1
+        elif are_closely_related(algo_key, true_key):
+            none_agree_algo_closely_rel += 1
+        elif not is_true(algo_key):
+            none_agree_algo_smth_else += 1
+
+
+    # 2 algorithms agree
+    # mus krum
+    if mus_key==krum_key and mus_key!=algo_key:
+        two_agree_mus_krum += 1
         if is_true(mus_key):
-            two_agree_two_right_mus_right += 1
-            if is_true(krum_key):
-                two_agree_two_right_krum_right += 1
-                if are_relative(algo_key, true_key):
-                    algo_relative_when_two_agree_two_right += 1
-                elif are_closely_related(true_key, algo_key):
-                    algo_closely_related_when_two_agree_two_right += 1
-                elif not is_true(algo_key):
-                    print("mus true, algo")
-                    algo_something_diff_when_two_agree_two_right += 1
-            elif is_true(algo_key):
-                two_agree_two_right_algo_right += 1
-                if are_relative(krum_key, true_key):
-                    krum_relative_when_two_agree_two_right += 1
-                elif are_closely_related(true_key, krum_key):
-                    krum_closely_related_when_two_agree_two_right += 1
-                elif not is_true(krum_key):
-                    print("mus true, krum")
-                    krum_something_diff_when_two_agree_two_right += 1
-        elif is_true(krum_key):
-            two_agree_two_right_krum_right += 1
-            if is_true(mus_key):
-                two_agree_two_right_mus_right += 1
-                if are_relative(algo_key, true_key):
-                    algo_relative_when_two_agree_two_right += 1
-                elif are_closely_related(true_key, algo_key):
-                    algo_closely_related_when_two_agree_two_right += 1
-                elif not is_true(algo_key):
-                    print("krum true, algo")
-                    algo_something_diff_when_two_agree_two_right += 1
-            elif is_true(algo_key):
-                two_agree_two_right_algo_right += 1
-                if are_relative(mus_key, true_key):
-                    mus_relative_when_two_agree_two_right += 1
-                elif are_closely_related(true_key, mus_key):
-                    mus_closely_related_when_two_agree_two_right += 1
-                elif not is_true(mus_key):
-                    print("krum true, mus")
-                    mus_something_diff_when_two_agree_two_right += 1
-        elif is_true(algo_key):
-            two_agree_two_right_algo_right += 1
-            if is_true(mus_key):
-                two_agree_two_right_mus_right += 1
-                if are_relative(krum_key, true_key):
-                    krum_relative_when_two_agree_two_right += 1
-                elif are_closely_related(true_key, krum_key):
-                    krum_closely_related_when_two_agree_two_right += 1
-                elif not is_true(krum_key):
-                    print("algo true, krum")
-                    krum_something_diff_when_two_agree_two_right += 1
-            if is_true(krum_key):
-                two_agree_two_right_krum_right += 1
-                if are_relative(mus_key, true_key):
-                    mus_relative_when_two_agree_two_right += 1
-                elif are_closely_related(true_key, mus_key):
-                    mus_closely_related_when_two_agree_two_right += 1
-                elif not is_true(mus_key):
-                    print("algo true, mus")
-                    mus_something_diff_when_two_agree_two_right += 1
-
-    # 1 right answer when 0 coincide
-    if none_agree and at_least_one_right:
-        none_agree_one_right += 1
-
-        # none agree but one output can be right
-        #     what determined music21: right, relative or related?
-        if is_true(mus_key):
-            none_agree_mus_right += 1
+            two_agree_two_right_mus_krum += 1
         elif are_relative(mus_key, true_key):
-            mus_relative_when_none_agree_one_right += 1
-        elif are_closely_related(true_key, mus_key):
-            mus_closely_related_when_none_agree_one_right += 1
-        else:
-            mus_something_diff_when_none_agree_one_right += 1
-        #     what determined Krumhansl: right, relative or related?
-        if is_true(krum_key):
-            none_agree_krum_right += 1
-        elif are_relative(krum_key, true_key):
-            krum_relative_when_none_agree_one_right += 1
-        elif are_closely_related(true_key, krum_key):
-            krum_closely_related_when_none_agree_one_right += 1
-        else:
-            krum_something_diff_when_none_agree_one_right += 1
-        #      what determined  Algorithm SA: right, relative or related?
+            two_agree_two_rel_mus_krum+=1
+        elif are_closely_related(mus_key, true_key):
+            two_agree_two_cl_rel_mus_krum+=1
+        elif not is_true(mus_key):
+            two_agree_two_smth_mus_krum+=1
+        #     if 2 algorithms agree, what about the third one?
         if is_true(algo_key):
-            none_agree_algo_right += 1
+            mus_krum_agree_algo_right+=1
         elif are_relative(algo_key, true_key):
-            algo_relative_when_none_agree_one_right += 1
-        elif are_closely_related(true_key, algo_key):
-            algo_closely_related_when_none_agree_one_right += 1
-        else:
-            algo_something_diff_when_none_agree_one_right += 1
-    # 0 right answers when 0 coincide
-    if none_agree and not at_least_one_right:
-        none_agree_none_right_num += 1
-        if are_relative(mus_key, true_key):
-            mus_relative_when_none_right += 1
-        if are_relative(krum_key, true_key):
-            krum_relative_when_none_right += 1
-        if are_relative(algo_key, true_key):
-            algo_relative_when_none_right += 1
-
-    #     0 right answers when 2 coincide
-    if strictly_two_agree and not at_least_one_right:
-        two_agree_none_right_num += 1
-        if are_relative(krum_key, true_key):
-            krum_relative_when_two_agree_none_right += 1
-        elif are_closely_related(true_key, krum_key):
-            krum_closely_related_when_two_agree_none_right += 1
-        if are_relative(algo_key, true_key):
-            algo_relative_when_two_agree_none_right += 1
-        elif are_closely_related(true_key, algo_key):
-            algo_closely_related_when_two_agree_none_right += 1
-        if are_relative(mus_key, true_key):
-            mus_relative_when_two_agree_none_right += 1
-        elif are_closely_related(true_key, mus_key):
-            mus_closely_related_when_two_agree_none_right += 1
-    strictly_one_right = one_or_three_right and not all_right
-    # 1 right answer when 2 coincide
-    if strictly_one_right and strictly_two_agree:
-        two_agree_one_right_num += 1
+            mus_krum_agree_algo_rel+=1
+        elif are_closely_related(algo_key, true_key):
+            mus_krum_agree_algo_cl_rel+=1
+        elif not is_true(algo_key):
+            mus_krum_agree_algo_smth_else+=1
+    # mus algo
+    elif mus_key == algo_key and mus_key!=krum_key:
+        two_agree_mus_algo+=1
         if is_true(mus_key):
-            two_agree_one_right_mus_right += 1
-            if is_true(krum_key):
-                two_agree_one_right_krum_right += 1
-            elif are_relative(krum_key, true_key):
-                krum_relative_when_two_agree_one_right += 1
-            elif are_closely_related(true_key, krum_key):
-                krum_closely_related_when_two_agree_one_right += 1
-            if is_true(algo_key):
-                two_agree_one_right_algo_right += 1
-            elif are_relative(algo_key, true_key):
-                algo_relative_when_two_agree_one_right += 1
-            elif are_closely_related(true_key, algo_key):
-                algo_closely_related_when_two_agree_one_right += 1
-        elif is_true(krum_key):
-            two_agree_one_right_krum_right += 1
-            if is_true(mus_key):
-                two_agree_one_right_mus_right += 1
-            elif are_relative(mus_key, true_key):
-                mus_relative_when_two_agree_one_right += 1
-            elif are_closely_related(true_key, mus_key):
-                mus_closely_related_when_two_agree_one_right += 1
-            if is_true(algo_key):
-                two_agree_one_right_algo_right += 1
-            elif are_relative(algo_key, true_key):
-                algo_relative_when_two_agree_one_right += 1
-            elif are_closely_related(true_key, algo_key):
-                algo_closely_related_when_two_agree_one_right += 1
-        elif is_true(algo_key):
-            two_agree_one_right_algo_right += 1
-            if is_true(mus_key):
-                two_agree_one_right_mus_right += 1
-            elif are_relative(mus_key, true_key):
-                mus_relative_when_two_agree_one_right += 1
-            elif are_closely_related(true_key, mus_key):
-                mus_closely_related_when_two_agree_one_right += 1
-            if is_true(krum_key):
-                two_agree_one_right_krum_right += 1
-            elif are_relative(krum_key, true_key):
-                krum_relative_when_two_agree_one_right += 1
-            elif are_closely_related(true_key, krum_key):
-                krum_closely_related_when_two_agree_one_right += 1
+            two_agree_two_right_mus_algo += 1
+        elif are_relative(mus_key, true_key):
+            two_agree_two_rel_mus_algo+=1
+        elif are_closely_related(mus_key, true_key):
+            two_agree_two_cl_rel_mus_algo+=1
+        elif not is_true(mus_key):
+            two_agree_two_smth_mus_algo+=1
+        #     if 2 algorithms agree, what about the third one?
+        if is_true(krum_key):
+            mus_algo_agree_krum_right += 1
+        elif are_relative(krum_key, true_key):
+            mus_algo_agree_krum_rel += 1
+        elif are_closely_related(krum_key, true_key):
+            mus_algo_agree_krum_cl_rel += 1
+        elif not is_true(krum_key):
+            mus_algo_agree_krum_smth_else += 1
 
-f = open("output.txt", 'w')
-
-
-def print_words():
-    # 3 agree, 3 right
-    f.write(' '.join(
-        ("If all outputs agree, then they are right in",
-         format(all_agree_all_right_num / all_agree_num * 100,
-                ".2f") + "% of cases"
-         )))
-    # 3 agree, 0 right
-    f.write(''.join("\nIf all outputs agree, then none is right in " +
-                    format(all_agree_none_right_num / all_agree_num * 100,
-                           ".2f") + "% of cases\n\tThey determined a relative key in " + format(
-        all_agree_none_right_relative_num / all_agree_num * 100,
-        ".2f") + "% of cases\n\tClosely related key in " + format(
-        all_agree_none_right_closely_related_num / all_agree_none_right_num * 100,
-        ".2f") + "% of cases\n\tSomething different in " + format(
-        all_agree_none_right_something_diff / all_agree_num * 100, ".2f") + "% of cases"))
-    # 2 agree, 2 right
-    f.write(''.join("\nIf two outputs agree, these two outputs are right in " +
-                    format(two_agree_two_right_num / strictly_two_agree_num * 100,
-                           ".2f") + "% of cases. "))
-    #  what about the third one?
-    #  if 2 agree, music21 right?
-    f.write(''.join(
-        "The third one is mistaken. \n\tOverall, if two outputs agree and these two outputs are right, then music21 is right in " + format(
-            two_agree_two_right_mus_right / two_agree_two_right_num * 100, ".2f")) + "% of cases")
-    # if 2 agree, music21 relative?
-    f.write(''.join(
-        "\n\tMusic21 determined a relative key in " + format(mus_relative_when_two_agree_two_right) + "% of cases"))
-    # if 2 agree, music21 closely related?
-    f.write(''.join("\n\tMusic21 determined a closely related key in " + format(
-        mus_closely_related_when_two_agree_two_right / two_agree_two_right_num * 100, ".2f") + "% of cases"))
-    # if 2 agree, music21 something different?
-    f.write(''.join("\n\tMusic21 something different in " + format(
-        mus_something_diff_when_two_agree_two_right / two_agree_two_right_num * 100, ".2f") + "% of cases"))
-
-    #  if 2 agree, Krumhansl algorithm right?
-    f.write(''.join(
-        "\n\t\tOverall, if two outputs agree and these two outputs are right, then Krumhansl algorithm is right in " + format(
-            two_agree_two_right_krum_right / two_agree_two_right_num * 100, ".2f")) + "% of cases")
-    # if 2 agree, Krumhansl algorithm relative?
-    f.write(''.join(
-        "\n\t\tKrumhansl algorithm determined a relative key in " + format(
-            krum_relative_when_two_agree_two_right) + "% of cases"))
-    # if 2 agree, Krumhansl algorithm closely related?
-    f.write(''.join("\n\t\tKrumhansl algorithm determined a closely related key in " + format(
-        krum_closely_related_when_two_agree_two_right / two_agree_two_right_num * 100, ".2f") + "% of cases"))
-    # if 2 agree, Krumhansl something different?
-    f.write(''.join("\n\t\tKrumhansl algorithm determined something different in " + format(
-        krum_something_diff_when_two_agree_two_right / two_agree_two_right_num * 100, ".2f") + "% of cases"))
-    #  if 2 agree, algorithm SA  right?
-    f.write(''.join(
-        "\n\t\t\tOverall, if two outputs agree and these two outputs are right, then algorithm SA  is right in " + format(
-            two_agree_two_right_algo_right / two_agree_two_right_num * 100, ".2f")) + "% of cases")
-    # if 2 agree, algorithm SA  relative?
-    f.write(''.join(
-        "\n\t\t\talgorithm SA  determined a relative key in " + format(
-            algo_relative_when_two_agree_two_right) + "% of cases"))
-    # if 2 agree, algorithm SA  closely related?
-    f.write(''.join("\n\t\t\talgorithm SA  determined a closely related key in " + format(
-        algo_closely_related_when_two_agree_two_right / two_agree_two_right_num * 100, ".2f") + "% of cases"))
-    # if 2 agree, algorithm SA something different?
-    f.write(''.join("\n\t\t\talgorithm SA  determined something different in " + format(
-        algo_something_diff_when_two_agree_two_right / two_agree_two_right_num * 100, ".2f") + "% of cases"))
-    # 2 agree but the third one is right
-    f.write(
-        ''.join("\nIf two outputs agree, the third one is right in " + format(
-            two_agree_one_right_num / strictly_two_agree_num * 100,
-            ".2f") + "% of cases"))
-    # what's the problem with these two?
-
-    f.write(''.join("\nIf two outputs agree, none is right in " +
-                    format(two_agree_none_right_num / strictly_two_agree_num * 100,
-                           ".2f") + "% of cases"))
-    f.write(''.join("\nIf all outputs are different,they are all wrong in " + format(
-        none_agree_none_right_num / none_agree_num * 100,
-        ".2f") + "% of cases"))
-    f.write(''.join("\nIf no output is the same, then there is one right output in " + format(
-        none_agree_one_right / none_agree_num * 100, ".2f") + "% of cases: "))
-    # mus right
-    f.write(
-        ''.join("\nIf no output is the same, then Music21 gives the right answer in " + format(
-            none_agree_mus_right / none_agree_one_right * 100,
-            ".2f") + "% of cases, if it is mistaken, then it determines a relative "
-                     "key in " + format(
-            mus_relative_when_none_agree_one_right / none_agree_one_right * 100,
-            ".2f") + "% of cases, closely related in " + format(
-            mus_closely_related_when_none_agree_one_right / none_agree_one_right * 100,
-            ".2f") + " something different in " + format(
-            mus_something_diff_when_none_agree_one_right / none_agree_one_right * 100, ".2f") + "% of cases"))
-    f.write(''.join(
-        "\nIf no output is the same, then Krumhansl gives the right answer in " + format(
-            none_agree_krum_right / none_agree_one_right * 100,
-            ".2f") + "% of cases, if it is mistaken, then it determines a relative key in " + format(
-            krum_relative_when_none_agree_one_right / none_agree_one_right * 100,
-            ".2f") + "% of cases, closely related in " + format(
-            krum_closely_related_when_none_agree_one_right / none_agree_one_right * 100,
-            ".2f") + " something different in " + format(
-            krum_something_diff_when_none_agree_one_right / none_agree_one_right * 100, ".2f") + "% of cases"))
-    f.write(''.join("\nIf no output is the same, then Algorithm SA gives the right answer in " + format(
-        none_agree_algo_right / none_agree_one_right * 100,
-        ".2f") + "% of cases, if it is mistaken, then it determines a relative key in " + format(
-        algo_relative_when_none_agree_one_right / none_agree_one_right * 100,
-        ".2f") + "% of cases, closely related in " + format(
-        algo_closely_related_when_none_agree_one_right / none_agree_one_right * 100,
-        ".2f") + " something different in " + format(
-        algo_something_diff_when_none_agree_one_right / none_agree_one_right * 100, ".2f") + "% of cases\n\n"))
+    #     krum algo
+    elif krum_key == algo_key and krum_key!=mus_key:
+        two_agree_krum_algo+=1
+        if is_true(krum_key):
+            two_agree_two_right_krum_algo+=1
+        elif are_relative(krum_key, true_key):
+            two_agree_two_rel_krum_algo+=1
+        elif are_closely_related(krum_key, true_key):
+            two_agree_two_cl_rel_krum_algo+=1
+        elif not is_true(krum_key):
+            two_agree_two_smth_krum_algo+=1
+        #     if 2 algorithms agree, what about the third one?
+        if is_true(mus_key):
+            krum_algo_agree_mus_right += 1
+        elif are_relative(mus_key, true_key):
+            krum_algo_agree_mus_rel += 1
+        elif are_closely_related(mus_key, true_key):
+            krum_algo_agree_mus_cl_rel += 1
+        elif not is_true(mus_key):
+            krum_algo_agree_mus_smth_else += 1
 
 
 def print_table():
-    f.write(''.join("\n Number of outputs " + "     Number of correct " +
-                    "\nthat agree on the " + "        outputs given" +
-                    "\n     answer            the number of coincidences\n"))
-    f.write(''.join("    3 - " + format(all_agree_num / num_of_files * 100, ".2f") + "%               3 - " + format(
-        all_agree_all_right_num / all_agree_num * 100,
-        ".2f") + "%\n"))
-    f.write(''.join("            " + "                 0 - " + format(all_agree_none_right_num / all_agree_num * 100,
-                                                                      ".2f") + "%\n"))
-    f.write(''.join(
-        "    2 - " + format(strictly_two_agree_num / num_of_files * 100, ".2f") + "%               2 - " + format(
-            two_agree_two_right_num / strictly_two_agree_num * 100,
-            ".2f") + "%\n"))
-    f.write(''.join(
-        "            " + "                 1 - " + format(two_agree_one_right_num / strictly_two_agree_num * 100,
-                                                          ".2f") + "%\n"))
-    f.write(''.join(
-        "            " + "                 0 - " + format(two_agree_none_right_num / strictly_two_agree_num * 100,
-                                                          ".2f") + "%\n"))
 
-    f.write(''.join(
-        "    0 - " + format(none_agree_num / num_of_files * 100, ".2f") + "%          " + "  1 right - " + format(
-            none_agree_one_right / none_agree_num * 100, ".2f") +
-        "%\n                        1 (music21) - " + format(
-            none_agree_mus_right / none_agree_one_right * 100,
-            ".2f") + "%   relative key - " + format(mus_relative_when_none_agree_one_right / none_agree_one_right * 100,
-                                                    ".2f") + "%, closely related key - " + format(
-            mus_closely_related_when_none_agree_one_right / none_agree_one_right * 100,
-            ".2f") + " something different in " + format(
-            mus_something_diff_when_none_agree_one_right / none_agree_one_right * 100, ".2f") + "% of cases\n"))
-    f.write(
-        ''.join("                       1 (Krumhansl) - " + format(none_agree_krum_right / none_agree_one_right * 100,
-                                                                   ".2f") + "%   relative key - " + format(
-            krum_relative_when_none_agree_one_right / none_agree_one_right * 100,
-            ".2f") + "% of cases, closely related in " + format(
-            krum_closely_related_when_none_agree_one_right / none_agree_one_right * 100,
-            ".2f") + "%, something different in " + format(
-            krum_something_diff_when_none_agree_one_right / none_agree_one_right * 100, ".2f") + "% of cases\n"))
-    f.write(''.join(
-        "                       1 (Algorithm SA) - " + format(none_agree_algo_right / none_agree_one_right * 100,
-                                                              ".2f") + "%   relative key - " + format(
-            algo_relative_when_none_agree_one_right / none_agree_one_right * 100,
-            ".2f") + "% of cases, closely related in " + format(
-            algo_closely_related_when_none_agree_one_right / none_agree_one_right * 100,
-            ".2f") + " something different in " + format(
-            algo_something_diff_when_none_agree_one_right / none_agree_one_right * 100, ".2f") + "% of cases\n\n"))
+    f.write(''.join("Algorithms coincide                                    The output is \n"))
+    f.write(''.join("      M, K, A                   right               relative                   cl.related                     wrong\n"))
+    f.write(''.join("      "+format(all_agree_num/num_of_files*100, ".2f")+"%"+"                    "+format((all_agree_all_right/all_agree_num)*100, ".2f")+"%                 "+format(all_agree_all_rel/all_agree_num*100, ".2f") +"%                       "+format(all_agree_all_closely_rel/all_agree_num*100, ".2f") +"%                       "+format(all_agree_smth_else/all_agree_num*100, ".2f") +"%        "+"\n\n\n\n\n\n"))
 
 
+    f.write(''.join("Algorithms coincide              Music(M)                                       Krumhansl(K)                                   Algorithm SA (A)\n"))
+    f.write(''.join("      None            +       rel       cl.rel       -                 +       rel       cl.rel       -                 +       rel       cl.rel       - \n"))
+    # mus
+    f.write(''.join("    "+format(none_agree_num/num_of_files*100, ".2f")+"%          "+
+                    format(none_agree_one_right_mus/none_agree_num*100, ".2f")+"%    "+
+                    format(none_agree_mus_rel/none_agree_num*100, ".2f")+"%     "+
+                    format(none_agree_mus_closely_rel/none_agree_num*100, ".2f")+"%      "+
+                    format(none_agree_mus_smth_else/none_agree_num*100, ".2f")+"%           "))
+    # krum
+    f.write(''.join("" +
+                    format(none_agree_one_right_krum / none_agree_num * 100, ".2f") + "%    " +
+                    format(none_agree_krum_rel / none_agree_num * 100, ".2f") + "%     " +
+                    format(none_agree_krum_closely_rel / none_agree_num * 100, ".2f") + "%      " +
+                    format(none_agree_krum_smth_else / none_agree_num * 100, ".2f") + "%           "))
+    # algo
+    f.write(''.join("" +
+                    format(none_agree_one_right_algo / none_agree_num * 100, ".2f") + "%    " +
+                    format(none_agree_algo_rel / none_agree_num * 100, ".2f") + "%     " +
+                    format(none_agree_algo_closely_rel / none_agree_num * 100, ".2f") + "%      " +
+                    format(none_agree_algo_smth_else / none_agree_num * 100, ".2f") + "%           \n\n\n\n\n\n\n"))
+    # mus and krum coincide
+    f.write(''.join(
+        "Algorithms coincide                              Music(M), Krumhansl(K)                                                       Algorithm SA (A)\n"))
+    f.write(''.join(
+        "      M, K                          +            rel            cl.rel            -                                   +       rel       cl.rel       - \n"))
+    f.write(''.join("    "+format(two_agree_mus_krum/num_of_files*100, ".2f")+"%                       "+
+                    format(two_agree_two_right_mus_krum/two_agree_mus_krum*100, ".2f")+"%         "+
+                    format(two_agree_two_rel_mus_krum/two_agree_mus_krum*100, ".2f")+"%          "+
+                    format(two_agree_two_cl_rel_mus_krum/two_agree_mus_krum*100, ".2f")+"%            "+
+                    format(two_agree_two_smth_mus_krum/two_agree_mus_krum*100, ".2f")+"%                        "))
+    # algo when mus and krum coincide
+    f.write(''.join("    "+ format(mus_krum_agree_algo_right/two_agree_mus_krum*100, ".2f")+"%   "+
+                    format(mus_krum_agree_algo_rel/two_agree_mus_krum*100, ".2f")+"%      "+
+                    format(mus_krum_agree_algo_cl_rel/two_agree_mus_krum*100, ".2f")+"%     "+
+                    format(mus_krum_agree_algo_smth_else/two_agree_mus_krum*100, ".2f")+"%    \n\n\n\n\n\n"))
+
+    # mus and algo coincide
+    f.write(''.join(
+        "Algorithms coincide                              Music(M), Algorithm SA(A)                                                      Krumhansl\n"))
+    f.write(''.join(
+        "      M, A                          +            rel            cl.rel            -                                   +       rel       cl.rel       - \n"))
+    f.write(''.join("    " + format(two_agree_mus_algo / num_of_files * 100, ".2f") + "%                       " +
+                    format(two_agree_two_right_mus_algo / two_agree_mus_algo * 100, ".2f") + "%         " +
+                    format(two_agree_two_rel_mus_algo / two_agree_mus_algo * 100, ".2f") + "%          " +
+                    format(two_agree_two_cl_rel_mus_algo / two_agree_mus_algo * 100, ".2f") + "%            " +
+                    format(two_agree_two_smth_mus_algo / two_agree_mus_algo * 100,
+                           ".2f") + "%                           "))
+    # krum when mus and algo coincide
+    f.write(''.join("    " + format(mus_algo_agree_krum_right / two_agree_mus_algo * 100, ".2f") + "%    " +
+                    format(mus_algo_agree_krum_rel / two_agree_mus_algo * 100, ".2f") + "%      " +
+                    format(mus_algo_agree_krum_cl_rel / two_agree_mus_algo * 100, ".2f") + "%     " +
+                    format(mus_algo_agree_krum_smth_else / two_agree_mus_algo * 100, ".2f") + "%    \n\n\n\n\n\n"))
+
+    # krum and algo coincide
+    f.write(''.join(
+        "Algorithms coincide                           Krumhansl(K), Algorithm SA(A)                                                      Music(M)\n"))
+    f.write(''.join(
+        "      K, A                          +            rel            cl.rel            -                                   +       rel       cl.rel       - \n"))
+    f.write(''.join("    " + format(two_agree_krum_algo / num_of_files * 100, ".2f") + "%                       " +
+                    format(two_agree_two_right_krum_algo / two_agree_krum_algo * 100, ".2f") + "%         " +
+                    format(two_agree_two_rel_krum_algo / two_agree_krum_algo * 100, ".2f") + "%          " +
+                    format(two_agree_two_cl_rel_krum_algo / two_agree_krum_algo * 100, ".2f") + "%            " +
+                    format(two_agree_two_smth_krum_algo / two_agree_krum_algo * 100,
+                           ".2f") + "%                           "))
+    # krum when mus and algo coincide
+    f.write(''.join("    " + format(krum_algo_agree_mus_right / two_agree_krum_algo * 100, ".2f") + "%    " +
+                    format(krum_algo_agree_mus_rel / two_agree_krum_algo * 100, ".2f") + "%      " +
+                    format(krum_algo_agree_mus_cl_rel / two_agree_krum_algo * 100, ".2f") + "%     " +
+                    format(krum_algo_agree_mus_smth_else / two_agree_krum_algo * 100, ".2f") + "%    "))
+
+f = open("output.txt", 'w')
 print_words()
 print_table()
+
